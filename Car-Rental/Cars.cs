@@ -29,12 +29,12 @@ class Car
 
     public static void GetCarsList()
     {
-        Console.WriteLine("ID | MODEL | SEGMENT | RODZAJ PALIWA | ROK PRODUKCJI | DOSTĘPNOŚĆ");
+        Console.WriteLine("ID | MODEL | SEGMENT | RODZAJ PALIWA | ROK PRODUKCJI | CENA | DOSTĘPNOŚĆ");
         int i = 1;
         foreach (Car car in carsList)
         {
             string availability = car.available ? "dostępny" : "niedostępny";
-            Console.WriteLine($"{i}|  {car.carBrand}  |  {car.carSegment}  |  {car.fuel}  |  {car.productionYear} | {availability}");
+            Console.WriteLine($"{i}|  {car.carBrand}  |  {car.carSegment}  |  {car.fuel}  |  {car.productionYear} | {car.price} | {availability}");
             i++;
         }
     }
