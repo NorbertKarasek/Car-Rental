@@ -27,8 +27,9 @@ class Car
         Console.WriteLine($"Samochód:\n{this.carBrand}\n{this.productionYear}");
     }
 
-    public static void getCarsList()
+    public static void GetCarsList()
     {
+        Console.WriteLine("ID | MODEL | SEGMENT | RODZAJ PALIWA | ROK PRODUKCJI | DOSTĘPNOŚĆ");
         int i = 1;
         foreach (Car car in carsList)
         {
