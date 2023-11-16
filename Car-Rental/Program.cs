@@ -13,7 +13,7 @@ class Program
     {
         Console.WriteLine("!! Witamy w wypożyczalni samochodów !!");
 
-        //LISTA SAMOCHODÓW
+        //Cars Data
         Car car1 = new Car("Škoda Citigo", "mini", "benzyna", 2014, 70);
         Car car2 = new Car("Toyota Aygo", "mini", "benzyna", 2020, 90);
         Car car3 = new Car("Fiat 500", "mini", "elektryczny", 2022, 110);
@@ -25,7 +25,7 @@ class Program
         Car car9 = new Car("Mercedes E270 AMG", "premium", "benzyna", 2019, 320);
         Car car10 = new Car("Tesla Model S", "premium", "elektryczny", 2022, 350);
 
-        //LISTA KLIENTÓW
+        //Client Data
         Client client1 = new Client("Norbert Karasek", 2014, 01, 05);
         Client client2 = new Client("Magdalena Jaborska", 2013, 02, 15);
         Client client3 = new Client("Jan Nowak", 2021, 03, 04);
@@ -55,52 +55,7 @@ class Program
                     break;
 
                 case RentCarOption:
-                    Console.WriteLine("Podaj ID klienta: ");
-                    if (int.TryParse(Console.ReadLine(), out int selectedClientId))
-                    {
-                        if (selectedClientId >= 1 && selectedClientId <= Client.ClientList.Count)
-                        {
-                            Client selectedClient = Client.ClientList[selectedClientId - 1];
-                            Console.WriteLine($"Witamy, {selectedClient.FullName}");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Niepoprawny numer ID");
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Niepoprawny numer ID");
-                        break;
-                    }
-                    Console.Write("Który samochód chcesz wynająć? Podaj numer samochodu: ");
-                    if (int.TryParse(Console.ReadLine(), out int selectedCarIndex))
-                    {
-                        if (selectedCarIndex >= 1 && selectedCarIndex <= Car.carsList.Count)
-                        {
-                            Car selectedCar = Car.carsList[selectedCarIndex - 1];
-                            if (selectedClient.DLicenceDuration.TotalDays < 4 * 365)
-                            {
-                                Console.WriteLine($"Cena wynajmu za dobę wynosi {selectedCar.price * 1.20}, na ile dni chcesz wynająć auto ?");
-                            }
-                            else
-                            {
-                                Console.WriteLine($"Cena wynajmu za dobę wynosi {selectedCar.price}, na ile dni chcesz wynająć auto ?");
-                            }
-                            Car.RentCar(selectedCar);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Niepoprawny numer samochodu");
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Niepoprawny numer samochodu.");
-                        break;
-                    }
+                    HandleRentCarOption();
                     break;
 
                 case ExitOption:
@@ -110,5 +65,77 @@ class Program
                     break;
             }
         }
+
+        static void HandleRentCarOption()
+
+        {
+            Console.WriteLine("Podaj ID klienta: ");
+            if (int.TryParse(Console.ReadLine(), out int selectedClientId))
+            {
+                Client selectedClient = GetClientById(selectedClientId);
+                if (selectedClient != null)
+                {
+                    Console.WriteLine($"Witamy, {selectedClient.FullName}");
+
+                    Console.Write("Który samochód chcesz wynająć? Podaj numer samochodu: ");
+                    if (int.TryParse(Console.ReadLine(), out int selectedCarIndex))
+                    {
+                        Car selectedCar = GetCarByIndex(selectedCarIndex);
+                        if (selectedCar != null)
+                        {
+                            // Display rental price
+                            Console.Write("Na ile dni chcesz wynająć auto? ");
+                            if (int.TryParse(Console.ReadLine(), out int rentalDuration))
+                            {
+                                int TotalCost = rentalDuration * selectedCar.price;
+                                Console.WriteLine($"Całkowity koszt wynajmu to {TotalCost}");
+                                Car.RentCar(selectedCar);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Niepoprawna liczba dni.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Niepoprawny numer samochodu");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Niepoprawny numer samochodu.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Niepoprawny numer ID klienta");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Niepoprawny numer ID");
+            }
+        }
+        
+        static Car GetCarByIndex(int index)
+        {
+            if (index >= 1 && index <= Car.carsList.Count)
+            {
+                return Car.carsList[index - 1];
+            }
+
+            return null; // Index is out of range
+        }
+
+        static Client GetClientById(int clientId)
+        {
+            if (clientId >= 1 && clientId <= Client.ClientList.Count)
+            {
+                return Client.ClientList[clientId - 1];
+            }
+
+            return null; // Client ID is out of range
+        }
+
     }
 }
