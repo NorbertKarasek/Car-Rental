@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Runtime.ConstrainedExecution;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 class Program
 {
+    private const string ListCarsOption = "1";
+    private const string ListClientsOption = "2";
+    private const string RentCarOption = "3";
+    private const string ExitOption = "4";
     static void Main()
     {
         Console.WriteLine("!! Witamy w wypożyczalni samochodów !!");
@@ -41,21 +46,28 @@ class Program
 
             switch (option)
             {
-                case "1":
+                case ListCarsOption:
                     Car.GetCarsList();
                     break;
 
-                case "2":
+                case ListClientsOption:
                     Client.GetClientsList();
                     break;
 
-                case "3":
+                case RentCarOption:
                     Console.WriteLine("Podaj ID klienta: ");
-                    int.TryParse(Console.ReadLine(), out int selectedClientId);
-                    if (selectedClientId >= 1 && selectedClientId <= Client.ClientList.Count)
+                    if (int.TryParse(Console.ReadLine(), out int selectedClientId))
                     {
-                        Client selectedClient = Client.ClientList[selectedClientId - 1];
-                        Console.WriteLine($"Witamy, {selectedClient.FullName}");
+                        if (selectedClientId >= 1 && selectedClientId <= Client.ClientList.Count)
+                        {
+                            Client selectedClient = Client.ClientList[selectedClientId - 1];
+                            Console.WriteLine($"Witamy, {selectedClient.FullName}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Niepoprawny numer ID");
+                            break;
+                        }
                     }
                     else
                     {
@@ -63,12 +75,26 @@ class Program
                         break;
                     }
                     Console.Write("Który samochód chcesz wynająć? Podaj numer samochodu: ");
-                    int.TryParse(Console.ReadLine(), out int selectedCarIndex);
-                    if (selectedCarIndex >= 1 && selectedCarIndex <= Car.carsList.Count)
+                    if (int.TryParse(Console.ReadLine(), out int selectedCarIndex))
                     {
-                        Car selectedCar = Car.carsList[selectedCarIndex - 1];
-                        Console.WriteLine($"Cena wynajmu za dobę wynosi {selectedCar.price}, na ile dni chcesz wynająć auto ?");
-                        Car.carRent(selectedCar);
+                        if (selectedCarIndex >= 1 && selectedCarIndex <= Car.carsList.Count)
+                        {
+                            Car selectedCar = Car.carsList[selectedCarIndex - 1];
+                            if (selectedClient.DLicenceDuration.TotalDays < 4 * 365)
+                            {
+                                Console.WriteLine($"Cena wynajmu za dobę wynosi {selectedCar.price * 1.20}, na ile dni chcesz wynająć auto ?");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Cena wynajmu za dobę wynosi {selectedCar.price}, na ile dni chcesz wynająć auto ?");
+                            }
+                            Car.RentCar(selectedCar);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Niepoprawny numer samochodu");
+                            break;
+                        }
                     }
                     else
                     {
@@ -77,7 +103,7 @@ class Program
                     }
                     break;
 
-                case "4":
+                case ExitOption:
                     return;
                 default:
                     Console.WriteLine("Niepoprawny wybór");

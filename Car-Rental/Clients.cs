@@ -18,7 +18,7 @@ public class Client
         Month = month;
         Year = year;
         LicenseDate = new DateTime(year, month, day);
-        DLicenceDuration = DateTime.Now - this.LicenseDate;
+        DLicenceDuration = DateTime.Now - LicenseDate;
         ClientList.Add(this);
     }
 
@@ -31,5 +31,14 @@ public class Client
             Console.WriteLine($"{i}| {client.FullName} | {client.LicenseDate.ToShortDateString()} ");
             i++;
         }
+    }
+    public TimeSpan GetDLicenceDuration()
+    {
+        return DateTime.Now - LicenseDate;
+    }
+
+    public Client GetClientByID(int id)
+    { 
+        return ClientList[id];
     }
 }

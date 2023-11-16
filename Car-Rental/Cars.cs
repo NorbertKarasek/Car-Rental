@@ -39,11 +39,12 @@ class Car
         }
     }
 
-    public static void carRent(Car oneCar)
+    public static void RentCar(Car oneCar)
     {
         if (oneCar.available)
         {
             oneCar.available = false;
+            Console.WriteLine($"Wynajęto samochód {oneCar.carBrand}");
         }
         else
         {
