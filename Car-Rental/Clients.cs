@@ -9,7 +9,7 @@ public class Client
     public int Month { get; set; }
     public int Year { get; set; }
     public DateTime LicenseDate { get; set; }
-    public TimeSpan DLicenceDuration;
+    public TimeSpan DLicenseDuration;
     public static List<Client> ClientList = new List<Client>();
     public Client(string fullName, int year, int month, int day)
     {
@@ -18,7 +18,7 @@ public class Client
         Month = month;
         Year = year;
         LicenseDate = new DateTime(year, month, day);
-        DLicenceDuration = DateTime.Now - LicenseDate;
+        DLicenseDuration = DateTime.Now - LicenseDate;
         ClientList.Add(this);
     }
 
@@ -31,14 +31,5 @@ public class Client
             Console.WriteLine($"{i}| {client.FullName} | {client.LicenseDate.ToShortDateString()} ");
             i++;
         }
-    }
-    public TimeSpan GetDLicenceDuration()
-    {
-        return DateTime.Now - LicenseDate;
-    }
-
-    public Client GetClientByID(int id)
-    { 
-        return ClientList[id];
     }
 }
