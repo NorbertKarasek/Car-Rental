@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 class Car
 {
-    private string carBrand;
-    private string carSegment;
-    private string fuel;
-    private int productionYear;
-    private int price;
+    public string carBrand;
+    public string carSegment;
+    public string fuel;
+    public int productionYear;
+    public int price;
     public bool available;
     public static List<Car> carsList = new List<Car>();
 

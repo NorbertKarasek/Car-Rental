@@ -51,38 +51,29 @@ class Program
 
                 case "3":
                     Console.WriteLine("Podaj ID klienta: ");
-                    if (int.TryParse(Console.ReadLine(), out int selectedClientId))
-                        if (selectedClientId >= 1 && selectedClientId <= Client.ClientList.Count)
-                        {
-                            Client selectedClient = Client.ClientList[selectedClientId - 1];
-                            Console.WriteLine($"Witamy, {selectedClient.FullName}");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Niepoprawny numer ID");
-                            break;
-                        }
+                    int.TryParse(Console.ReadLine(), out int selectedClientId);
+                    if (selectedClientId >= 1 && selectedClientId <= Client.ClientList.Count)
+                    {
+                        Client selectedClient = Client.ClientList[selectedClientId - 1];
+                        Console.WriteLine($"Witamy, {selectedClient.FullName}");
+                    }
                     else
                     {
-                        Console.WriteLine("Niepoprawny numer");
+                        Console.WriteLine("Niepoprawny numer ID");
+                        break;
                     }
                     Console.Write("Który samochód chcesz wynająć? Podaj numer samochodu: ");
-                    if (int.TryParse(Console.ReadLine(), out int selectedCarIndex))
+                    int.TryParse(Console.ReadLine(), out int selectedCarIndex);
+                    if (selectedCarIndex >= 1 && selectedCarIndex <= Car.carsList.Count)
                     {
-                        if (selectedCarIndex >= 1 && selectedCarIndex <= Car.carsList.Count)
-                        {
-                            Car selectedCar = Car.carsList[selectedCarIndex - 1];
-                            Car.carRent(selectedCar);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Niepoprawny numer samochodu.");
-                            break;
-                        }
+                        Car selectedCar = Car.carsList[selectedCarIndex - 1];
+                        Console.WriteLine($"Cena wynajmu za dobę wynosi {selectedCar.price}, na ile dni chcesz wynająć auto ?");
+                        Car.carRent(selectedCar);
                     }
                     else
                     {
-                        Console.WriteLine("Niepoprawny numer.");
+                        Console.WriteLine("Niepoprawny numer samochodu.");
+                        break;
                     }
                     break;
 

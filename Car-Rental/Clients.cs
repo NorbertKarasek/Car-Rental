@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 
 public class Client
 {
@@ -8,9 +9,8 @@ public class Client
     public int Month { get; set; }
     public int Year { get; set; }
     public DateTime LicenseDate { get; set; }
-    public DateTime ActualTime { get; set; }
+    public TimeSpan DLicenceDuration;
     public static List<Client> ClientList = new List<Client>();
-
     public Client(string fullName, int year, int month, int day)
     {
         FullName = fullName;
@@ -18,7 +18,7 @@ public class Client
         Month = month;
         Year = year;
         LicenseDate = new DateTime(year, month, day);
-        ActualTime = DateTime.Now;
+        DLicenceDuration = DateTime.Now - this.LicenseDate;
         ClientList.Add(this);
     }
 
