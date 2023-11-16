@@ -81,9 +81,9 @@ class Program
                     if (int.TryParse(Console.ReadLine(), out int selectedCarIndex))
                     {
                         Car selectedCar = GetCarByIndex(selectedCarIndex);
-                        if (selectedCar != null)
+                        if (selectedCar != null && selectedCar.available)
                         {
-                            // Display rental price
+                            Console.WriteLine($"Cena za jeden dzień wynajmu {selectedCar.carBrand} to {selectedCar.price} PLN");
                             Console.Write("Na ile dni chcesz wynająć auto? ");
                             if (int.TryParse(Console.ReadLine(), out int rentalDuration))
                             {
