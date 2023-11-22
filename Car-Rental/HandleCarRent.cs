@@ -30,7 +30,9 @@ namespace Handle_Car_Rental
                             if (int.TryParse(Console.ReadLine(), out int rentalDuration))
                             {
                                 int TotalCost = rentalDuration * selectedCar.price;
+                                var ReturnDate = DateTime.Now.AddDays(rentalDuration);
                                 Console.WriteLine($"Całkowity koszt wynajmu to {TotalCost}");
+                                Console.WriteLine($"Samochód należy oddać w dniu {ReturnDate.ToShortDateString()}");
                                 Car.RentCar(selectedCar);
                             }
                             else
