@@ -8,8 +8,7 @@ public class Client
     public int Day { get; set; }
     public int Month { get; set; }
     public int Year { get; set; }
-    public DateTime LicenseDate { get; set; }
-    public TimeSpan DLicenseDuration;
+    public DateTime LicenseDate;
     public static List<Client> ClientList = new List<Client>();
     public Client(string fullName, int year, int month, int day)
     {
@@ -18,7 +17,6 @@ public class Client
         Month = month;
         Year = year;
         LicenseDate = new DateTime(year, month, day);
-        DLicenseDuration = DateTime.Now - LicenseDate;
         ClientList.Add(this);
     }
 
