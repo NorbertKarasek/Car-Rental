@@ -13,39 +13,39 @@ namespace Handle_Car_Rental
 
     {
         internal static void HandleRentCarOption()
-        {
+        {// TRZEBA TERAZ PODZIELIC ABY CONTINUE WRACAŁO DO AKTUALNEGO READLINE NIE ZAWSZE DO POCZATKU!
             while (true)
             {
-                Console.WriteLine("W celu wynajęcia auta, podaj ID klienta: ");
+                Console.WriteLine("Wynajem auta, podaj ID klienta: ");
                 if (!int.TryParse(Console.ReadLine(), out int selectedClientId))
                 {
-                    Console.Write("Błędny format ID klienta, podaj numer: ");
+                    Console.WriteLine("Błędny format ID klienta, podaj numer: ");
                     continue; // Ask for input again
                 }
                 else if (selectedClientId < 1 || selectedClientId > Client.ClientList.Count)
                 {
-                    Console.Write("Nie ma klienta o takim numerze ID, podaj prawidłowy numer: ");
+                    Console.WriteLine("Nie ma klienta o takim numerze ID, podaj prawidłowy numer: ");
                     continue; // Ask for input again
                 }
 
                 Client selectedClient = Client.GetClientById(selectedClientId);
 
                 Console.WriteLine($"Witamy, {selectedClient.FullName}");
-                Console.Write("Który samochód chcesz wynająć? Podaj numer samochodu: ");
+                Console.WriteLine("Który samochód chcesz wynająć? Podaj numer samochodu: ");
 
                 if (!int.TryParse(Console.ReadLine(), out int selectedCarIndex))
                 {
-                    Console.Write("Błędny format ID samochodu, podaj numer: ");
+                    Console.WriteLine("Błędny format ID samochodu");
                     continue; // Ask for input again
                 }
                 else if (selectedCarIndex < 1 || selectedCarIndex > Car.carsList.Count)
                 {
-                    Console.Write("Niepoprawny numer samochodu");
+                    Console.WriteLine("Niepoprawny numer samochodu");
                     continue; // Ask for input again
                 }
                 else if (!Car.carsList[selectedCarIndex - 1].available)
                 {
-                    Console.Write("Samochód jest niedostępny");
+                    Console.WriteLine("Samochód jest niedostępny");
                     continue;
                 }
                 Car selectedCar = Car.GetCarByIndex(selectedCarIndex);
