@@ -2,32 +2,44 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 
-public class Client
-{
-    public string FullName { get; set; }
-    public int Day { get; set; }
-    public int Month { get; set; }
-    public int Year { get; set; }
-    public DateTime LicenseDate;
-    public static List<Client> ClientList = new List<Client>();
-    public Client(string fullName, int year, int month, int day)
-    {
-        FullName = fullName;
-        Day = day;
-        Month = month;
-        Year = year;
-        LicenseDate = new DateTime(year, month, day);
-        ClientList.Add(this);
-    }
 
-    public static void GetClientsList()
+namespace Clients
+{
+    public class Client
     {
-        Console.WriteLine("ID | IMIE I NAZWISKO | DATA UZYSKANIA PRAWA JAZDY");
-        int i = 1;
-        foreach (Client client in ClientList)
+        public string FullName { get; set; }
+        public int Day { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
+        public DateTime LicenseDate;
+        public static List<Client> ClientList = new List<Client>();
+        public Client(string fullName, int year, int month, int day)
         {
-            Console.WriteLine($"{i}| {client.FullName} | {client.LicenseDate.ToShortDateString()} ");
-            i++;
+            FullName = fullName;
+            Day = day;
+            Month = month;
+            Year = year;
+            LicenseDate = new DateTime(year, month, day);
+            ClientList.Add(this);
+        }
+
+        public static void GetClientsList()
+        {
+            Console.WriteLine("ID | IMIE I NAZWISKO | DATA UZYSKANIA PRAWA JAZDY");
+            int i = 1;
+            foreach (Client client in ClientList)
+            {
+                Console.WriteLine($"{i}| {client.FullName} | {client.LicenseDate.ToShortDateString()} ");
+                i++;
+            }
+        }
+        public static Client GetClientById(int clientId)
+        {
+            if (clientId >= 1 && clientId <= Client.ClientList.Count)
+            {
+                return Client.ClientList[clientId - 1];
+            }
+            return null; // Client ID is out of range
         }
     }
 }

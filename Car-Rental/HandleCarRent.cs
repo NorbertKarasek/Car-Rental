@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cars;
+using Clients;
 
 namespace Handle_Car_Rental
 {
@@ -13,43 +16,45 @@ namespace Handle_Car_Rental
         {
             while (true)
             {
-                Console.WriteLine("Podaj ID klienta: ");
+                Console.WriteLine("W celu wynajęcia auta, podaj ID klienta: ");
                 if (!int.TryParse(Console.ReadLine(), out int selectedClientId))
                 {
-                    Console.WriteLine("Niepoprawny numer ID klienta");
+                    Console.Write("Błędny format ID klienta, podaj numer: ");
                     continue; // Ask for input again
                 }
-
-                Client selectedClient = GetClientById(selectedClientId);
-
-                if (selectedClientId < 1 || selectedClientId > Client.ClientList.Count)
+                else if (selectedClientId < 1 || selectedClientId > Client.ClientList.Count)
                 {
-                    Console.WriteLine("Niepoprawny numer ID klienta");
+                    Console.Write("Nie ma klienta o takim numerze ID, podaj prawidłowy numer: ");
                     continue; // Ask for input again
                 }
+
+                Client selectedClient = Client.GetClientById(selectedClientId);
 
                 Console.WriteLine($"Witamy, {selectedClient.FullName}");
                 Console.Write("Który samochód chcesz wynająć? Podaj numer samochodu: ");
 
                 if (!int.TryParse(Console.ReadLine(), out int selectedCarIndex))
                 {
-                    Console.WriteLine("Niepoprawny numer samochodu.");
+                    Console.Write("Błędny format ID samochodu, podaj numer: ");
                     continue; // Ask for input again
                 }
-
-                if (selectedCarIndex < 1 || selectedCarIndex > Car.carsList.Count || !Car.carsList[selectedCarIndex - 1].available)
+                else if (selectedCarIndex < 1 || selectedCarIndex > Car.carsList.Count)
                 {
-                    Console.WriteLine("Niepoprawny numer samochodu");
+                    Console.Write("Niepoprawny numer samochodu");
                     continue; // Ask for input again
                 }
-
-                Car selectedCar = GetCarByIndex(selectedCarIndex);
+                else if (!Car.carsList[selectedCarIndex - 1].available)
+                {
+                    Console.Write("Samochód jest niedostępny");
+                    continue;
+                }
+                Car selectedCar = Car.GetCarByIndex(selectedCarIndex);
                 Console.WriteLine($"Cena za jeden dzień wynajmu {selectedCar.carBrand} to {selectedCar.price} PLN");
 
                 Console.Write("Na ile dni chcesz wynająć auto? ");
                 if (!int.TryParse(Console.ReadLine(), out int rentalDuration))
                 {
-                    Console.WriteLine("Niepoprawna liczba dni.");
+                    Console.WriteLine("Błędny format tekstu, podaj liczbę");
                     continue; // Ask for input again
                 }
 
@@ -70,25 +75,6 @@ namespace Handle_Car_Rental
                 Car.RentCar(selectedCar);
                 break;
             }
-        }
-
-        static Car GetCarByIndex(int index)
-        {
-            if (index >= 1 && index <= Car.carsList.Count)
-            {
-                return Car.carsList[index - 1];
-            }
-
-            return null; // Index is out of range
-        }
-        static Client GetClientById(int clientId)
-        {
-            if (clientId >= 1 && clientId <= Client.ClientList.Count)
-            {
-                return Client.ClientList[clientId - 1];
-            }
-
-            return null; // Client ID is out of range
         }
     }
 }
