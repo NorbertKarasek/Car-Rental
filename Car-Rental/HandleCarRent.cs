@@ -11,64 +11,67 @@ namespace Handle_Car_Rental
     {
         internal static void HandleRentCarOption()
         {
-            Console.WriteLine("Podaj ID klienta: ");
-            if (int.TryParse(Console.ReadLine(), out int selectedClientId))
+            while (true)
             {
-                Client selectedClient = GetClientById(selectedClientId);
-                if (selectedClient != null)
+                Console.WriteLine("Podaj ID klienta: ");
+                if (!int.TryParse(Console.ReadLine(), out int selectedClientId))
                 {
-                    Console.WriteLine($"Witamy, {selectedClient.FullName}");
+                    Console.WriteLine("Niepoprawny numer ID klienta");
+                    continue; // Ask for input again
+                }
 
-                    Console.Write("Który samochód chcesz wynająć? Podaj numer samochodu: ");
-                    if (int.TryParse(Console.ReadLine(), out int selectedCarIndex))
-                    {
-                        Car selectedCar = GetCarByIndex(selectedCarIndex);
-                        if (selectedCar != null && selectedCar.available)
-                        {
-                            Console.WriteLine($"Cena za jeden dzień wynajmu {selectedCar.carBrand} to {selectedCar.price} PLN");
-                            Console.Write("Na ile dni chcesz wynająć auto? ");
-                            if (int.TryParse(Console.ReadLine(), out int rentalDuration))
-                            {
-                                int DLicenseDuration = DateTime.Now.Year - selectedClient.LicenseDate.Year;
-                                int TotalCost;
-                                if (DLicenseDuration < 4)
-                                {
-                                    TotalCost = (int) (rentalDuration * (selectedCar.price * 1.20));
-                                }
-                                else
-                                {
-                                    TotalCost = rentalDuration * selectedCar.price;
-                                }
-                                var ReturnDate = DateTime.Now.AddDays(rentalDuration);
-                                Console.WriteLine($"Całkowity koszt wynajmu to {TotalCost}");
-                                Console.WriteLine($"Samochód należy oddać w dniu {ReturnDate.ToShortDateString()}");
-                                Car.RentCar(selectedCar);
-                            }
-                            else
-                            {
-                                Console.WriteLine("Niepoprawna liczba dni.");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Niepoprawny numer samochodu");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Niepoprawny numer samochodu.");
-                    }
+                Client selectedClient = GetClientById(selectedClientId);
+
+                if (selectedClientId < 1 || selectedClientId > Client.ClientList.Count)
+                {
+                    Console.WriteLine("Niepoprawny numer ID klienta");
+                    continue; // Ask for input again
+                }
+
+                Console.WriteLine($"Witamy, {selectedClient.FullName}");
+                Console.Write("Który samochód chcesz wynająć? Podaj numer samochodu: ");
+
+                if (!int.TryParse(Console.ReadLine(), out int selectedCarIndex))
+                {
+                    Console.WriteLine("Niepoprawny numer samochodu.");
+                    continue; // Ask for input again
+                }
+
+                if (selectedCarIndex < 1 || selectedCarIndex > Car.carsList.Count || !Car.carsList[selectedCarIndex - 1].available)
+                {
+                    Console.WriteLine("Niepoprawny numer samochodu");
+                    continue; // Ask for input again
+                }
+
+                Car selectedCar = GetCarByIndex(selectedCarIndex);
+                Console.WriteLine($"Cena za jeden dzień wynajmu {selectedCar.carBrand} to {selectedCar.price} PLN");
+
+                Console.Write("Na ile dni chcesz wynająć auto? ");
+                if (!int.TryParse(Console.ReadLine(), out int rentalDuration))
+                {
+                    Console.WriteLine("Niepoprawna liczba dni.");
+                    continue; // Ask for input again
+                }
+
+                int DLicenseDuration = DateTime.Now.Year - selectedClient.LicenseDate.Year;
+                int TotalCost;
+
+                if (DLicenseDuration < 4)
+                {
+                    TotalCost = (int)(rentalDuration * (selectedCar.price * 1.20));
                 }
                 else
                 {
-                    Console.WriteLine("Niepoprawny numer ID klienta");
+                    TotalCost = rentalDuration * selectedCar.price;
                 }
-            }
-            else
-            {
-                Console.WriteLine("Niepoprawny numer ID");
+                var ReturnDate = DateTime.Now.AddDays(rentalDuration);
+                Console.WriteLine($"Całkowity koszt wynajmu to {TotalCost}");
+                Console.WriteLine($"Samochód należy oddać w dniu {ReturnDate.ToShortDateString()}");
+                Car.RentCar(selectedCar);
+                break;
             }
         }
+
         static Car GetCarByIndex(int index)
         {
             if (index >= 1 && index <= Car.carsList.Count)
