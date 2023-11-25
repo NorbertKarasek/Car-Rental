@@ -29,9 +29,11 @@ namespace Handle_Car_Rental
                 }
 
                 Client selectedClient = Client.GetClientById(selectedClientId); // Set selected client in variable
+                int DLicenseDuration = DateTime.Now.Year - selectedClient.LicenseDate.Year; // check lenght of driver license
 
                 Console.WriteLine($"Witamy, {selectedClient.FullName}");
                 Console.WriteLine("Który samochód chcesz wynająć? Podaj numer samochodu: ");
+
 
                 if (!int.TryParse(Console.ReadLine(), out int selectedCarIndex)) // if id is not int
                 {
@@ -48,28 +50,24 @@ namespace Handle_Car_Rental
                     Console.WriteLine("Samochód jest niedostępny");
                     continue;
                 }
-                Car selectedCar = Car.GetCarByIndex(selectedCarIndex); // Set selected car in variable
-                Console.WriteLine($"Cena za jeden dzień wynajmu {selectedCar.carBrand} to {selectedCar.price} PLN");
 
+                Car selectedCar = Car.GetCarByIndex(selectedCarIndex); // Set selected car in variable
+                if (DLicenseDuration < 4 && selectedCar.carSegment == "premium")
+                {
+                    Console.WriteLine("Z uwagi na krótki okres posiadania prawa jazdy, nie możesz wynjąć auta segmentu premium");
+                    continue;
+                }
+
+                Console.WriteLine($"Cena za jeden dzień wynajmu {selectedCar.carBrand} to {selectedCar.price} PLN");
                 Console.Write("Na ile dni chcesz wynająć auto? ");
+
                 if (!int.TryParse(Console.ReadLine(), out int rentalDuration)) // if amount of days is not int
                 {
                     Console.WriteLine("Błędny format tekstu, podaj liczbę");
                     continue; // Ask for input again
                 }
 
-                int DLicenseDuration = DateTime.Now.Year - selectedClient.LicenseDate.Year; // check lenght of driver license
-                int TotalCost;
-
-                if (DLicenseDuration < 4) // if its shorter than 4 years, price grows by 20%
-                {
-                    TotalCost = (int)(rentalDuration * (selectedCar.price * 1.20));
-                }
-                else
-                {
-                    TotalCost = rentalDuration * selectedCar.price;
-                }
-
+                int TotalCost = DLicenseDuration < 4 ? (int)(rentalDuration * (selectedCar.price * 1.20)) : rentalDuration * selectedCar.price; // Price grows by 20% if Driver license shorter than 4 years
                 var additionalDays = 0;
 
                 if (rentalDuration >= 7 && rentalDuration < 30)
