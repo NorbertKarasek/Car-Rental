@@ -12,6 +12,15 @@ namespace Handle_Car_Rental
     internal class HandleRental
 
     {
+        internal static void ShowMenu()
+        {
+            Console.WriteLine("--------------------------");
+            Console.WriteLine("1. Lista  samochodów");
+            Console.WriteLine("2. Lista klientów");
+            Console.WriteLine("3. Wynajem auta");
+            Console.WriteLine("4. Zakoncz");
+            Console.Write("Wybierz opcję: ");
+        }
         internal static void HandleRentCarOption() // Whole procedure of renting car
         {// TRZEBA TERAZ PODZIELIC ABY CONTINUE WRACAŁO DO AKTUALNEGO READLINE NIE ZAWSZE DO POCZATKU!
             while (true)
@@ -22,7 +31,7 @@ namespace Handle_Car_Rental
                     Console.WriteLine("Błędny format ID klienta, podaj numer: ");
                     continue; // Ask for input again
                 }
-                else if (selectedClientId < 1 || selectedClientId > Client.ClientList.Count) // If its out of client list index
+                else if (selectedClientId < 1 || selectedClientId > Client.ClientList.Count) // If ID is out of client list index
                 {
                     Console.WriteLine("Nie ma klienta o takim numerze ID, podaj prawidłowy ID: ");
                     continue; // Ask for input again
@@ -40,7 +49,7 @@ namespace Handle_Car_Rental
                     Console.Write("Błędny format ID samochodu, podaj numer: ");
                     goto CarIdRetry; // Ask for input again
                 }
-                else if (selectedCarIndex < 1 || selectedCarIndex > Car.carsList.Count) // if its out of cars list index
+                else if (selectedCarIndex < 1 || selectedCarIndex > Car.carsList.Count) // if id is out of cars list index
                 {
                     Console.Write("Nie ma takiego samochodu, wybierz poprawy numer: ");
                     goto CarIdRetry; // Ask for input again

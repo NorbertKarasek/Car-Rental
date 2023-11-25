@@ -39,12 +39,7 @@ class Program
 
         while (true)
         {
-            Console.WriteLine("--------------------------");
-            Console.WriteLine("1. Lista  samochodów");
-            Console.WriteLine("2. Lista klientów");
-            Console.WriteLine("3. Wynajem auta");
-            Console.WriteLine("4. Zakoncz");
-            Console.Write("Wybierz opcję: ");
+            HandleRental.ShowMenu();
             string option = Console.ReadLine();
 
             switch (option)
