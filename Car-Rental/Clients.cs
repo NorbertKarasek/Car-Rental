@@ -13,7 +13,7 @@ namespace Clients
         public int Year { get; set; }
         public DateTime LicenseDate;
         public static List<Client> ClientList = new List<Client>();
-        public Client(string fullName, int year, int month, int day)
+        public Client(string fullName, int year, int month, int day) // Constructor
         {
             FullName = fullName;
             Day = day;
@@ -23,7 +23,7 @@ namespace Clients
             ClientList.Add(this);
         }
 
-        public static void GetClientsList()
+        public static void GetClientsList() // Show clients list with all informations
         {
             Console.WriteLine("ID | IMIE I NAZWISKO | DATA UZYSKANIA PRAWA JAZDY");
             int i = 1;
@@ -33,7 +33,7 @@ namespace Clients
                 i++;
             }
         }
-        public static Client GetClientById(int clientId)
+        public static Client GetClientById(int clientId) // Get client from a clients list by index
         {
             if (clientId >= 1 && clientId <= Client.ClientList.Count)
             {

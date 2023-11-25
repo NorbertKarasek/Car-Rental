@@ -13,7 +13,7 @@ namespace Cars
         public bool available;
         public static List<Car> carsList = new List<Car>();
 
-        public Car(string carBrand, string carSegment, string fuel, int productionYear, int price, bool available = true)
+        public Car(string carBrand, string carSegment, string fuel, int productionYear, int price, bool available = true) // Constructor
         {
             this.carBrand = carBrand;
             this.carSegment = carSegment;
@@ -24,12 +24,12 @@ namespace Cars
             carsList.Add(this);
         }
 
-        public void getInformation()
+        public void getInformation() // Show information about one car
         {
             Console.WriteLine($"Samochód:\n{this.carBrand}\n{this.productionYear}");
         }
 
-        public static void GetCarsList()
+        public static void GetCarsList() // Show cars list with all informations
         {
             Console.WriteLine("ID | MODEL | SEGMENT | RODZAJ PALIWA | ROK PRODUKCJI | CENA | DOSTĘPNOŚĆ");
             int i = 1;
@@ -41,7 +41,7 @@ namespace Cars
             }
         }
 
-        public static void RentCar(Car oneCar)
+        public static void RentCar(Car oneCar) // Rent a car by changing availablity status
         {
             if (oneCar.available)
             {
@@ -53,7 +53,7 @@ namespace Cars
                 Console.WriteLine("Samochód jest niedostępny");
             }
         }
-        public static Car GetCarByIndex(int index)
+        public static Car GetCarByIndex(int index) // Get car index from list of cars
         {
             if (index >= 1 && index <= Car.carsList.Count)
             {
