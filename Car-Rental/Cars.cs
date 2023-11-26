@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cars
+namespace Car_Rental
 {
     class Car
     {

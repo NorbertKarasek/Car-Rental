@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 
 
-namespace Clients
+namespace Car_Rental
 {
     public class Client
     {

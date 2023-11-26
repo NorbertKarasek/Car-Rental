@@ -4,10 +4,8 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Cars;
-using Clients;
 
-namespace Handle_Car_Rental
+namespace Car_Rental
 {
     internal class HandleRental
 
@@ -74,7 +72,7 @@ namespace Handle_Car_Rental
                 RentDaysRetry:
                 if (!int.TryParse(Console.ReadLine(), out int rentalDuration)) // if amount of days is not int
                 {
-                    Console.Write("Błędny format tekstu, podaj liczbę dni: ");
+                    Console.Write("Błędny format, podaj liczbę dni: ");
                     goto RentDaysRetry; // Ask for input again
                 }
 
