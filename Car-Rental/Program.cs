@@ -15,8 +15,6 @@ class Program
         Data.CreateCars();
         Data.CreateClients();
 
-        Console.WriteLine("!! Witamy w wypożyczalni samochodów !!");
-
         while (true)
         {
             HandleRental.ShowMenu();

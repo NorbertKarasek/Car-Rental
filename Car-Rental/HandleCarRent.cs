@@ -12,6 +12,7 @@ namespace Car_Rental
     {
         internal static void ShowMenu()
         {
+            Console.WriteLine("!! Witamy w wypożyczalni samochodów !!");
             Console.WriteLine("--------------------------");
             Console.WriteLine("1. Lista  samochodów");
             Console.WriteLine("2. Lista klientów");
