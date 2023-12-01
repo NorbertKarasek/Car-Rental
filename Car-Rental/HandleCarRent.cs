@@ -21,7 +21,7 @@ namespace Car_Rental
             Console.Write("Wybierz opcję: ");
         }
         internal static void HandleRentCarOption() // Whole procedure of renting car
-        {// TRZEBA TERAZ PODZIELIC ABY CONTINUE WRACAŁO DO AKTUALNEGO READLINE NIE ZAWSZE DO POCZATKU!
+        {
             while (true)
             {
                 Console.WriteLine("Wynajem auta, podaj ID klienta: ");
